@@ -7,7 +7,7 @@ export const pageTransition = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
-  transition: { duration: 0.3, ease: "easeOut" },
+  transition: { duration: 0.3, ease: "easeOut" as const },
 };
 
 // Card animations
@@ -16,7 +16,7 @@ export const cardHover = {
   hover: {
     scale: 1.02,
     boxShadow: "8px 8px 0px #000",
-    transition: { duration: 0.2, ease: "easeOut" },
+    transition: { duration: 0.2, ease: "easeOut" as const },
   },
   tap: {
     scale: 0.98,
@@ -48,7 +48,7 @@ export const staggerItem = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.3, ease: "easeOut" },
+    transition: { duration: 0.3, ease: "easeOut" as const },
   },
 };
 
@@ -65,7 +65,7 @@ export const modalContent = {
     opacity: 1,
     scale: 1,
     y: 0,
-    transition: { duration: 0.3, ease: "easeOut" },
+    transition: { duration: 0.3, ease: "easeOut" as const },
   },
   exit: {
     opacity: 0,
@@ -81,7 +81,7 @@ export const badgePulse = {
   transition: {
     duration: 2,
     repeat: Infinity,
-    ease: "easeInOut",
+    ease: "easeInOut" as const,
   },
 };
 
@@ -90,7 +90,7 @@ export const slideInRight = {
   initial: { x: 100, opacity: 0 },
   animate: { x: 0, opacity: 1 },
   exit: { x: 100, opacity: 0 },
-  transition: { duration: 0.3, ease: "easeOut" },
+  transition: { duration: 0.3, ease: "easeOut" as const },
 };
 
 // Bounce animation
@@ -100,7 +100,7 @@ export const bounce = {
     duration: 0.6,
     repeat: Infinity,
     repeatDelay: 2,
-    ease: "easeInOut",
+    ease: "easeInOut" as const,
   },
 };
 
@@ -121,5 +121,5 @@ export const expandWidth = {
 // Mood color transition
 export const moodTransition = {
   duration: 1,
-  ease: "easeInOut",
+  ease: "easeInOut" as const,
 };
