@@ -84,13 +84,13 @@ export default function Home() {
                 </Button>
               </motion.div>
             </Link>
-            <Link href="/journal">
+            <Link href="/analytics">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 <Button size="lg" variant="reverse" className="text-lg">
-                  View Demo
+                  View Analytics
                 </Button>
               </motion.div>
             </Link>
