@@ -159,9 +159,10 @@ export async function fetchMoodTimeline(
 export async function createEntry(
   entry: Omit<JournalEntry, "_id">
 ): Promise<JournalEntry> {
+  const { _type, ...entryData } = entry;
   return await client.create({
     _type: "journalEntry",
-    ...entry,
+    ...entryData,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   });
