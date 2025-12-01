@@ -73,7 +73,7 @@ Return ONLY the JSON object, nothing else.`,
     const score = Math.max(-1, Math.min(1, parsed.score || 0));
     const intensity = Math.max(0, Math.min(1, parsed.intensity || 0));
     const keywords = Array.isArray(parsed.keywords)
-      ? parsed.keywords.slice(0, 5).filter((k: any) => typeof k === "string")
+      ? parsed.keywords.slice(0, 5).filter((k: unknown) => typeof k === "string")
       : [];
 
     const label = getMoodLabel(score, intensity);
