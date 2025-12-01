@@ -152,10 +152,7 @@ function extractKeywords(text: string): string[] {
 // Cache for mood analysis results
 const moodCache = new Map<string, MoodData>();
 
-export async function analyzeSentiment(
-  text: string,
-  useGroq: boolean = false
-): Promise<MoodData> {
+export async function analyzeSentiment(text: string): Promise<MoodData> {
   if (!text || text.trim().length < 10) {
     return {
       score: 0,
@@ -173,19 +170,19 @@ export async function analyzeSentiment(
   }
 
   try {
-    if (useGroq && process.env.GROQ_API_KEY) {
-      // Try Groq API
-      const response = await fetch("/api/mood", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: text.slice(0, 500) }),
-      });
+    // Try Groq API first for real AI analysis
+    const response = await fetch("/api/mood", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: text.slice(0, 500) }),
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        moodCache.set(cacheKey, data);
-        return data;
-      }
+    if (response.ok) {
+      const data = await response.json();
+      moodCache.set(cacheKey, data);
+      return data;
+    } else {
+      console.warn("Groq API returned error, using fallback");
     }
   } catch (error) {
     console.warn("Groq API failed, using lexicon fallback:", error);

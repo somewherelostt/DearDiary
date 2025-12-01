@@ -7,9 +7,14 @@ import { motion } from "framer-motion";
 interface MoodIndicatorProps {
   mood: MoodData;
   isAnalyzing?: boolean;
+  lastAnalyzed?: Date | null;
 }
 
-export function MoodIndicator({ mood, isAnalyzing }: MoodIndicatorProps) {
+export function MoodIndicator({
+  mood,
+  isAnalyzing,
+  lastAnalyzed,
+}: MoodIndicatorProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
@@ -27,33 +32,65 @@ export function MoodIndicator({ mood, isAnalyzing }: MoodIndicatorProps) {
           repeat: isAnalyzing ? Infinity : 0,
         }}
       >
-        <div
+        <motion.div
           className="w-full h-full rounded-full border-4 border-black relative overflow-hidden"
-          style={{ backgroundColor: mood.color }}
+          animate={{ backgroundColor: mood.color }}
+          transition={{
+            duration: 1.5,
+            ease: [0.4, 0, 0.2, 1],
+          }}
         >
           {/* Intensity fill */}
           <motion.div
             className="absolute bottom-0 left-0 right-0 bg-black/20"
             initial={{ height: 0 }}
             animate={{ height: `${mood.intensity * 100}%` }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           />
-        </div>
+
+          {/* Subtle shimmer effect on color change */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-t from-white/0 via-white/30 to-white/0"
+            initial={{ y: "100%" }}
+            animate={{ y: "-100%" }}
+            transition={{
+              duration: 2,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatDelay: 3,
+            }}
+          />
+        </motion.div>
 
         {/* Pulse effect */}
         {isAnalyzing && (
-          <motion.div
-            className="absolute inset-0 rounded-full border-4 border-black"
-            style={{ backgroundColor: mood.color }}
-            animate={{
-              scale: [1, 1.5],
-              opacity: [0.5, 0],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-            }}
-          />
+          <>
+            <motion.div
+              className="absolute inset-0 rounded-full border-4 border-black"
+              style={{ backgroundColor: mood.color }}
+              animate={{
+                scale: [1, 1.5],
+                opacity: [0.5, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+              }}
+            />
+            <motion.div
+              className="absolute inset-0 rounded-full border-4 border-black"
+              style={{ backgroundColor: mood.color }}
+              animate={{
+                scale: [1, 1.3],
+                opacity: [0.3, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                delay: 0.3,
+              }}
+            />
+          </>
         )}
       </motion.div>
 
@@ -82,6 +119,44 @@ export function MoodIndicator({ mood, isAnalyzing }: MoodIndicatorProps) {
             </span>
           </div>
         </div>
+
+        {/* AI Analysis Status */}
+        {lastAnalyzed && (
+          <motion.div
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-xs font-medium mb-2 flex items-center gap-2"
+          >
+            <motion.span
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="text-base"
+            >
+              🤖
+            </motion.span>
+            <span className="text-gray-600">
+              <span className="font-bold text-black">Groq AI</span> analyzed{" "}
+              {lastAnalyzed.toLocaleTimeString()} • Updates every 5 sec
+            </span>
+          </motion.div>
+        )}
+
+        {/* Analyzing Status */}
+        {isAnalyzing && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-xs font-bold mb-2 flex items-center gap-2 text-purple"
+          >
+            <motion.span
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            >
+              ⚡
+            </motion.span>
+            <span>Analyzing with Groq AI...</span>
+          </motion.div>
+        )}
 
         {/* Keywords */}
         {mood.keywords.length > 0 && (

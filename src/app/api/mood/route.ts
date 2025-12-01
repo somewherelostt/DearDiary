@@ -26,23 +26,30 @@ export async function POST(request: NextRequest) {
       messages: [
         {
           role: "system",
-          content: `You are a sentiment analysis expert. Analyze the emotional sentiment of the given text and return ONLY a JSON object with this exact structure:
+          content: `You are an expert emotional intelligence AI analyzing journal entries. Analyze the emotional sentiment and respond with ONLY a JSON object:
+
 {
-  "score": <number between -1 (very negative) and 1 (very positive)>,
-  "intensity": <number between 0 (weak) and 1 (strong emotion)>,
-  "keywords": [<array of up to 5 most emotionally significant words from the text>]
+  "score": <number from -1 to 1, where -1 is extremely negative/sad/angry, 0 is neutral, and 1 is extremely positive/joyful>,
+  "intensity": <number from 0 to 1, where 0 is emotionally flat and 1 is very intense/strong emotions>,
+  "keywords": [<3-5 most emotionally significant words that reveal the user's feelings>]
 }
 
-Return ONLY valid JSON, no additional text.`,
+Consider:
+- Positive emotions: happiness, joy, excitement, love, gratitude, peace, calm
+- Negative emotions: sadness, anger, anxiety, fear, frustration, worry, depression
+- Intensity: how strong are the emotions expressed?
+- Context: look beyond surface words to understand deeper feelings
+
+Return ONLY the JSON object, nothing else.`,
         },
         {
           role: "user",
           content: text.slice(0, 500),
         },
       ],
-      model: "llama-3.1-8b-instant",
-      temperature: 0.3,
-      max_tokens: 200,
+      model: "llama-3.3-70b-versatile",
+      temperature: 0.5,
+      max_tokens: 250,
     });
 
     const responseText = completion.choices[0]?.message?.content;
@@ -51,12 +58,22 @@ Return ONLY valid JSON, no additional text.`,
       throw new Error("No response from Groq API");
     }
 
-    // Parse the JSON response
-    const parsed = JSON.parse(responseText);
+    // Clean and parse the JSON response
+    let cleanedResponse = responseText.trim();
+
+    // Remove markdown code blocks if present
+    if (cleanedResponse.startsWith("```")) {
+      cleanedResponse = cleanedResponse
+        .replace(/```json?\n?/g, "")
+        .replace(/```\n?/g, "")
+        .trim();
+    }
+
+    const parsed = JSON.parse(cleanedResponse);
     const score = Math.max(-1, Math.min(1, parsed.score || 0));
     const intensity = Math.max(0, Math.min(1, parsed.intensity || 0));
     const keywords = Array.isArray(parsed.keywords)
-      ? parsed.keywords.slice(0, 5)
+      ? parsed.keywords.slice(0, 5).filter((k: any) => typeof k === "string")
       : [];
 
     const label = getMoodLabel(score, intensity);
@@ -72,7 +89,10 @@ Return ONLY valid JSON, no additional text.`,
   } catch (error) {
     console.error("Groq API error:", error);
     return NextResponse.json(
-      { error: "Failed to analyze sentiment" },
+      {
+        error: "Failed to analyze sentiment",
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }

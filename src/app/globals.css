@@ -169,18 +169,34 @@ body {
 
 /* Neobrutalism Animation for Mood Transitions */
 @keyframes mood-shift {
-  from {
-    opacity: 0.8;
+  0% {
+    opacity: 0.95;
+    filter: brightness(1);
   }
-  to {
+  50% {
+    opacity: 0.98;
+    filter: brightness(1.02);
+  }
+  100% {
     opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes color-pulse {
+  0%, 100% {
+    filter: saturate(1) brightness(1);
+  }
+  50% {
+    filter: saturate(1.05) brightness(1.03);
   }
 }
 
 .mood-transition {
-  transition: background-color 600ms cubic-bezier(0.4, 0, 0.2, 1),
-              color 300ms ease;
-  animation: mood-shift 600ms ease;
+  transition: background-color 1500ms cubic-bezier(0.4, 0, 0.2, 1),
+              color 800ms ease,
+              filter 1000ms ease;
+  animation: mood-shift 1500ms ease, color-pulse 3s ease-in-out infinite;
 }
 
 /* Button Press Effect */

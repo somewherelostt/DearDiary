@@ -14,6 +14,7 @@ import {
 import { ArrowLeft, Calendar } from "lucide-react";
 import Link from "next/link";
 import { MoodLabel } from "@/types";
+import { getAnalytics } from "@/lib/local-storage";
 
 interface Analytics {
   stats: {
@@ -30,35 +31,23 @@ export default function AnalyticsPage() {
   const [analytics, setAnalytics] = useState<Analytics | null>(null);
 
   useEffect(() => {
-    // Simulate fetching analytics data
-    // Replace with actual API call: fetch("/api/analytics?userId=...")
-    setTimeout(() => {
+    // Fetch real analytics data from localStorage
+    const loadAnalytics = () => {
+      const data = getAnalytics(30);
       setAnalytics({
         stats: {
-          totalEntries: 42,
-          avgSentiment: "0.35",
-          dominantMood: "calm",
+          totalEntries: data.totalEntries,
+          avgSentiment: data.avgSentiment,
+          dominantMood: data.dominantMood,
         },
-        moodCounts: {
-          joyful: 12,
-          calm: 15,
-          neutral: 8,
-          anxious: 4,
-          sad: 2,
-          angry: 1,
-        } as Record<MoodLabel, number>,
-        moodTimeline: [
-          { date: "2024-11-01", score: 0.3, label: "calm" },
-          { date: "2024-11-05", score: 0.7, label: "joyful" },
-          { date: "2024-11-10", score: -0.2, label: "sad" },
-          { date: "2024-11-15", score: 0.5, label: "calm" },
-          { date: "2024-11-20", score: 0.8, label: "joyful" },
-          { date: "2024-11-25", score: 0.1, label: "neutral" },
-          { date: "2024-11-30", score: 0.4, label: "calm" },
-        ],
+        moodCounts: data.moodCounts as Record<MoodLabel, number>,
+        moodTimeline: data.moodTimeline,
       });
       setIsLoading(false);
-    }, 1000);
+    };
+
+    // Small delay to ensure component is mounted
+    setTimeout(loadAnalytics, 100);
   }, []);
 
   if (isLoading) {
@@ -99,10 +88,10 @@ export default function AnalyticsPage() {
           animate="show"
         >
           <motion.div variants={staggerItem} className="mb-6">
-            <Link href="/dashboard">
+            <Link href="/journal">
               <Button variant="reverse" size="default">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Dashboard
+                Back to Journal
               </Button>
             </Link>
           </motion.div>

@@ -8,7 +8,9 @@ import { useDebounce } from "@/lib/hooks";
 import { analyzeSentiment } from "@/lib/mood-analyzer";
 import { MoodData } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
-import { Save, Loader2 } from "lucide-react";
+import { Save, Loader2, Check } from "lucide-react";
+import { saveEntry } from "@/lib/local-storage";
+import Link from "next/link";
 
 const DEFAULT_MOOD: MoodData = {
   score: 0,
@@ -24,20 +26,26 @@ export function JournalEditor() {
   const [mood, setMood] = useState<MoodData>(DEFAULT_MOOD);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const [wordCount, setWordCount] = useState(0);
   const [charCount, setCharCount] = useState(0);
+  const [lastAnalyzed, setLastAnalyzed] = useState<Date | null>(null);
 
-  const debouncedContent = useDebounce(content, 600);
+  const debouncedContent = useDebounce(content, 5000); // Check every 5 seconds
 
   // Analyze mood when content changes
   useEffect(() => {
     if (debouncedContent.trim().length > 10) {
       setIsAnalyzing(true);
       analyzeSentiment(debouncedContent)
-        .then(setMood)
+        .then((result) => {
+          setMood(result);
+          setLastAnalyzed(new Date());
+        })
         .finally(() => setIsAnalyzing(false));
     } else {
       setMood(DEFAULT_MOOD);
+      setLastAnalyzed(null);
     }
   }, [debouncedContent]);
 
@@ -49,18 +57,54 @@ export function JournalEditor() {
   }, [content]);
 
   const handleSave = async () => {
+    if (!content.trim() || !title.trim()) return;
+
     setIsSaving(true);
-    // Simulate save
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIsSaving(false);
+    setSaveSuccess(false);
+
+    try {
+      // Save to localStorage
+      saveEntry({
+        title: title.trim(),
+        content: content.trim(),
+        mood,
+        wordCount,
+      });
+
+      setSaveSuccess(true);
+
+      // Clear form after successful save
+      setTimeout(() => {
+        setTitle("");
+        setContent("");
+        setMood(DEFAULT_MOOD);
+        setLastAnalyzed(null);
+        setSaveSuccess(false);
+      }, 2000);
+    } catch (error) {
+      console.error("Failed to save entry:", error);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="min-h-screen mood-transition p-4 sm:p-6 md:p-8"
-      style={{ backgroundColor: mood.color }}
+      animate={{
+        opacity: 1,
+        backgroundColor: mood.color,
+      }}
+      transition={{
+        backgroundColor: {
+          duration: 1.5,
+          ease: [0.4, 0, 0.2, 1],
+        },
+        opacity: {
+          duration: 0.3,
+        },
+      }}
+      className="min-h-screen p-4 sm:p-6 md:p-8"
     >
       <div className="max-w-5xl mx-auto">
         {/* Header */}
@@ -82,12 +126,17 @@ export function JournalEditor() {
               </span>
               <Button
                 onClick={handleSave}
-                disabled={isSaving || !content.trim()}
+                disabled={isSaving || !content.trim() || !title.trim()}
                 variant="default"
                 size="default"
                 className="w-full sm:w-auto"
               >
-                {isSaving ? (
+                {saveSuccess ? (
+                  <>
+                    <Check className="mr-2 h-4 w-4" />
+                    Saved!
+                  </>
+                ) : isSaving ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Saving...
@@ -110,7 +159,11 @@ export function JournalEditor() {
           transition={{ delay: 0.1 }}
           className="mb-6"
         >
-          <MoodIndicator mood={mood} isAnalyzing={isAnalyzing} />
+          <MoodIndicator
+            mood={mood}
+            isAnalyzing={isAnalyzing}
+            lastAnalyzed={lastAnalyzed}
+          />
         </motion.div>
 
         {/* Editor Card */}
@@ -174,17 +227,28 @@ export function JournalEditor() {
           transition={{ delay: 0.3 }}
           className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4"
         >
+          <Link href="/analytics">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full p-3 sm:p-4 bg-white border-3 border-black rounded-sm shadow-neo hover:shadow-neo-md transition-all text-center"
+            >
+              <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">📊</div>
+              <div className="text-xs sm:text-sm font-bold">View Analytics</div>
+            </motion.button>
+          </Link>
+
           {[
-            { emoji: "📊", label: "View Analytics" },
-            { emoji: "🔍", label: "Search Entries" },
-            { emoji: "⚙️", label: "Settings" },
-            { emoji: "❓", label: "Help" },
+            { emoji: "🔍", label: "Search Entries", disabled: true },
+            { emoji: "⚙️", label: "Settings", disabled: true },
+            { emoji: "❓", label: "Help", disabled: true },
           ].map((action) => (
             <motion.button
               key={action.label}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-3 sm:p-4 bg-white border-3 border-black rounded-sm shadow-neo hover:shadow-neo-md transition-all text-center"
+              whileHover={{ scale: action.disabled ? 1 : 1.05 }}
+              whileTap={{ scale: action.disabled ? 1 : 0.95 }}
+              className="p-3 sm:p-4 bg-white border-3 border-black rounded-sm shadow-neo hover:shadow-neo-md transition-all text-center opacity-50 cursor-not-allowed"
+              disabled={action.disabled}
             >
               <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">
                 {action.emoji}
