@@ -16,7 +16,7 @@ export default function Home() {
       <section className="container mx-auto px-4 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <Badge variant="yellow" className="mb-6 text-base px-6 py-2">
-            ✨ Built for Hackathon 2025
+            ✨ AI-Powered Mood Journal
           </Badge>
 
           <h1 className="text-6xl md:text-8xl font-black mb-6 leading-none">
@@ -183,7 +183,7 @@ export default function Home() {
         <div className="container mx-auto px-4 text-center">
           <p className="font-bold text-lg mb-2">DearDiary</p>
           <p className="font-medium text-gray-600">
-            Built with ❤️ for Hackathon 2025
+            Your emotions, beautifully captured
           </p>
           <div className="flex gap-4 justify-center mt-4">
             <Badge variant="lime">Neobrutalism Design</Badge>

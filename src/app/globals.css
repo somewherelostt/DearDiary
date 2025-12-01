@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Neobrutalism Design System for DearDiary */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  
+  /* Mood Colors */
+  --color-mood-joyful: var(--mood-joyful);
+  --color-mood-calm: var(--mood-calm);
+  --color-mood-sad: var(--mood-sad);
+  --color-mood-angry: var(--mood-angry);
+  --color-mood-anxious: var(--mood-anxious);
+  --color-mood-neutral: var(--mood-neutral);
+  
+  /* Accent Colors */
+  --color-yellow: var(--yellow);
+  --color-pink: var(--pink);
+  --color-cyan: var(--cyan);
+  --color-lime: var(--lime);
+  --color-purple: var(--purple);
+  
+  /* Neobrutalism Shadows */
+  --shadow-sm: 3px 3px 0px 0px #000000;
+  --shadow-md: 5px 5px 0px 0px #000000;
+  --shadow-lg: 8px 8px 0px 0px #000000;
+  
+  /* Border radius (minimal for neobrutalism) */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+}
+
+:root {
+  /* Core Colors - Neobrutalism Black & White */
+  --background: #FFFFFF;
+  --foreground: #000000;
+  --border: #000000;
+  --ring: #000000;
+  --input: #FFFFFF;
+  
+  /* Primary - Black */
+  --primary: #000000;
+  --primary-foreground: #FFFFFF;
+  
+  /* Secondary - White */
+  --secondary: #FFFFFF;
+  --secondary-foreground: #000000;
+  
+  /* Card */
+  --card: #FFFFFF;
+  --card-foreground: #000000;
+  
+  /* Popover */
+  --popover: #FFFFFF;
+  --popover-foreground: #000000;
+  
+  /* Muted */
+  --muted: #F5F5F5;
+  --muted-foreground: #666666;
+  
+  /* Accent */
+  --accent: #FFD700;
+  --accent-foreground: #000000;
+  
+  /* Destructive */
+  --destructive: #DC143C;
+  
+  /* Mood Colors */
+  --mood-joyful: #FFD700;
+  --mood-calm: #87CEEB;
+  --mood-sad: #6495ED;
+  --mood-angry: #DC143C;
+  --mood-anxious: #FF8C00;
+  --mood-neutral: #D3D3D3;
+  
+  /* Accent Colors */
+  --yellow: #FFD700;
+  --pink: #FF69B4;
+  --cyan: #00FFFF;
+  --lime: #CCFF00;
+  --purple: #9D4EDD;
+}
+
+.dark {
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --border: #FFFFFF;
+  --ring: #FFFFFF;
+  --input: #1A1A1A;
+  
+  --primary: #FFFFFF;
+  --primary-foreground: #000000;
+  
+  --secondary: #1A1A1A;
+  --secondary-foreground: #FFFFFF;
+  
+  --card: #1A1A1A;
+  --card-foreground: #FFFFFF;
+  
+  --popover: #1A1A1A;
+  --popover-foreground: #FFFFFF;
+  
+  --muted: #262626;
+  --muted-foreground: #A0A0A0;
+  
+  --accent: #FFD700;
+  --accent-foreground: #000000;
+  
+  --destructive: #FF4444;
+  
+  /* Dark mode mood colors (slightly adjusted for visibility) */
+  --mood-joyful: #FFD700;
+  --mood-calm: #87CEEB;
+  --mood-sad: #6495ED;
+  --mood-angry: #FF4444;
+  --mood-anxious: #FF8C00;
+  --mood-neutral: #A0A0A0;
+}
+
+/* Neobrutalism Utility Classes */
+* {
+  @apply border-border;
+}
+
+body {
+  @apply bg-background text-foreground;
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+/* Custom scrollbar for neobrutalism */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+  border: 2px solid var(--border);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--foreground);
+  border: 2px solid var(--border);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Neobrutalism Animation for Mood Transitions */
+@keyframes mood-shift {
+  from {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mood-transition {
+  transition: background-color 600ms cubic-bezier(0.4, 0, 0.2, 1),
+              color 300ms ease;
+  animation: mood-shift 600ms ease;
+}
+
+/* Button Press Effect */
+.neo-press:active {
+  transform: translate(3px, 3px);
+  box-shadow: none !important;
+}
+
+/* Text Selection */
+::selection {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* Focus Styles */
+*:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
