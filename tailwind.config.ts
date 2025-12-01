@@ -9,6 +9,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-geist-sans)"],
+        mono: ["var(--font-geist-mono)"],
+        serif: ["var(--font-merriweather)", "Georgia", "serif"],
+        // Design System Typography
+        body: ["var(--font-inter)", "system-ui", "sans-serif"],
+        heading: ["var(--font-fraunces)", "Georgia", "serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -128,6 +136,7 @@ const config: Config = {
           "linear-gradient(to right, #d8b4fe, #c084fc, #e879f9)",
         "gradient-neutral":
           "linear-gradient(to right, #e5e7eb, #cbd5e1, #a1a1aa)",
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "mesh-ambient":
           "radial-gradient(at 40% 20%, rgba(253, 224, 71, 0.3) 0px, transparent 50%), radial-gradient(at 80% 0%, rgba(251, 146, 60, 0.3) 0px, transparent 50%), radial-gradient(at 0% 50%, rgba(167, 243, 208, 0.3) 0px, transparent 50%), radial-gradient(at 80% 50%, rgba(196, 181, 253, 0.3) 0px, transparent 50%), radial-gradient(at 0% 100%, rgba(134, 239, 172, 0.3) 0px, transparent 50%), radial-gradient(at 80% 100%, rgba(249, 168, 212, 0.3) 0px, transparent 50%)",
       },

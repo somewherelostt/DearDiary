@@ -149,3 +149,7 @@ export function getAnalytics(days: number = 30) {
     moodTimeline,
   };
 }
+
+export function clearAllEntries(): void {
+  localStorage.removeItem(ENTRIES_KEY);
+}

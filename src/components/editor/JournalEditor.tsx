@@ -150,7 +150,7 @@ export function JournalEditor() {
                   {saveSuccess ? (
                     <>
                       <Check className="w-4 h-4 text-green-600" />
-                      <span className="text-sm font-medium text-neutral-700">
+                      <span className="font-body text-sm font-medium text-neutral-700">
                         Saved
                       </span>
                     </>
@@ -165,7 +165,7 @@ export function JournalEditor() {
                         }}
                         className="w-4 h-4 border-2 border-neutral-300 border-t-neutral-700 rounded-full"
                       />
-                      <span className="text-sm font-medium text-neutral-700">
+                      <span className="font-body text-sm font-medium text-neutral-700">
                         Saving...
                       </span>
                     </>
@@ -187,9 +187,8 @@ export function JournalEditor() {
               placeholder="Untitled Entry"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="text-4xl font-bold border-none shadow-none focus-visible:ring-0 h-auto p-0 bg-transparent placeholder:text-neutral-300"
+              className="font-heading text-4xl font-medium border-none shadow-none focus-visible:ring-0 h-auto p-0 bg-transparent placeholder:text-neutral-300"
               style={{
-                fontFamily: "var(--font-geist-sans)",
                 color: "#2D2D2D",
               }}
             />
@@ -205,9 +204,8 @@ export function JournalEditor() {
               placeholder="How does this moment feel?"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full min-h-[70vh] resize-none text-lg leading-relaxed focus:outline-none bg-transparent placeholder:text-neutral-300 placeholder:italic"
+              className="font-serif w-full min-h-[70vh] resize-none text-lg leading-relaxed focus:outline-none bg-transparent placeholder:text-neutral-300 placeholder:italic"
               style={{
-                fontFamily: "var(--font-merriweather)",
                 color: "#2D2D2D",
                 lineHeight: "1.8",
               }}
@@ -225,7 +223,7 @@ export function JournalEditor() {
                 className="fixed bottom-0 left-16 right-0 bg-gradient-to-t from-neutral-50/90 to-transparent backdrop-blur-sm py-4"
               >
                 <div className="max-w-3xl mx-auto px-6">
-                  <div className="flex items-center justify-between text-sm text-neutral-500">
+                  <div className="flex items-center justify-between font-body text-sm text-neutral-500">
                     <span>
                       {wordCount} {wordCount === 1 ? "word" : "words"} ·{" "}
                       {charCount} {charCount === 1 ? "character" : "characters"}

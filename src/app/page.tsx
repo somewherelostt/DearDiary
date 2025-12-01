@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
@@ -20,11 +21,8 @@ export default function Home() {
       >
         <div className="flex items-center justify-between gap-12 px-6 py-3 bg-white/80 backdrop-blur-md border border-black/5 rounded-full shadow-lg shadow-black/5">
           {/* Brand Mark */}
-          <Link
-            href="/"
-            className="text-sm font-bold tracking-tighter uppercase"
-          >
-            DearDiary
+          <Link href="/" className="flex items-center">
+            <BrandLogo variant="full" />
           </Link>
 
           {/* Navigation Links - Hidden on Mobile */}
