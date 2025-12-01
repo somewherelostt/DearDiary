@@ -5,9 +5,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { FloatingAppInterface } from "@/components/landing/FloatingAppInterface";
-import { ChatInterface } from "@/components/landing/ChatInterface";
-import { BarChart } from "@/components/landing/BarChart";
-import { LockIcon } from "@/components/landing/LockIcon";
 import { MoodMixingBoard } from "@/components/landing/MoodMixingBoard";
 import { EmotionMarquee } from "@/components/landing/EmotionMarquee";
 
@@ -195,8 +192,8 @@ export default function Home() {
                 {/* AI Response */}
                 <div className="flex flex-col items-start">
                   <div className="self-start bg-neutral-100 border border-neutral-200 py-3 px-4 rounded-2xl rounded-bl-none max-w-md shadow-sm text-sm">
-                    I sense some anxiety in your words. Let's explore what's on
-                    your mind. Would you like to talk about it?
+                    I sense some anxiety in your words. Let&apos;s explore
+                    what&apos;s on your mind. Would you like to talk about it?
                   </div>
                   {/* Mood Tags */}
                   <div className="flex gap-2 mt-2">

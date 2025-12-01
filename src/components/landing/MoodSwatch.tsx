@@ -9,12 +9,7 @@ interface MoodSwatchProps {
   label: string;
 }
 
-export function MoodSwatch({
-  mood,
-  gradient,
-  onHover,
-  label,
-}: MoodSwatchProps) {
+export function MoodSwatch({ gradient, onHover, label }: MoodSwatchProps) {
   return (
     <motion.div
       className="flex flex-col items-center gap-4 cursor-pointer"
