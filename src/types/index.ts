@@ -18,7 +18,7 @@ export interface JournalEntry {
   _id: string;
   _type: "journalEntry";
   title: string;
-  body: any; // Portable Text
+  body: unknown; // Portable Text - complex structure from Sanity
   snippet: string;
   authorRef: {
     _type: "reference";

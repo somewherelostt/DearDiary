@@ -1,4 +1,4 @@
-import { MoodData, MoodLabel } from "@/types";
+import { MoodData } from "@/types";
 import { getMoodLabel, moodToHsl } from "./utils";
 
 // Simple lexicon-based fallback analyzer

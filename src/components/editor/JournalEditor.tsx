@@ -179,7 +179,7 @@ export function JournalEditor() {
             { emoji: "🔍", label: "Search Entries" },
             { emoji: "⚙️", label: "Settings" },
             { emoji: "❓", label: "Help" },
-          ].map((action, index) => (
+          ].map((action) => (
             <motion.button
               key={action.label}
               whileHover={{ scale: 1.05 }}

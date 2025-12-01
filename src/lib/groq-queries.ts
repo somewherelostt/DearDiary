@@ -159,6 +159,7 @@ export async function fetchMoodTimeline(
 export async function createEntry(
   entry: Omit<JournalEntry, "_id">
 ): Promise<JournalEntry> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { _type, ...entryData } = entry;
   return await client.create({
     _type: "journalEntry",

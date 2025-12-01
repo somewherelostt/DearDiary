@@ -13,12 +13,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   pageTransition,
-  cardHover,
   staggerContainer,
   staggerItem,
   bounce,
 } from "@/lib/animations";
-import { Sparkles, Zap, TrendingUp, Lock, Palette, Heart } from "lucide-react";
 
 export default function Home() {
   return (
@@ -171,7 +169,9 @@ export default function Home() {
             >
               <div className="text-5xl mb-4">{mood.emoji}</div>
               <Badge
-                variant={mood.color as any}
+                variant={
+                  mood.color as "joyful" | "calm" | "anxious" | "neutral"
+                }
                 className="text-base px-4 py-2"
               >
                 {mood.label}

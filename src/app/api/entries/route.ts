@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
   createEntry,
-  updateEntry,
-  deleteEntry,
   fetchRecentEntries,
   fetchEntriesByMood,
   searchEntries,
 } from "@/lib/groq-queries";
-import { JournalEntry } from "@/types";
+import { JournalEntry, MoodLabel } from "@/types";
 
 // GET /api/entries - Fetch entries with filters
 export async function GET(request: NextRequest) {
@@ -30,7 +28,7 @@ export async function GET(request: NextRequest) {
     if (search) {
       entries = await searchEntries(userId, search);
     } else if (mood) {
-      entries = await fetchEntriesByMood(userId, mood as any);
+      entries = await fetchEntriesByMood(userId, mood as MoodLabel);
     } else {
       entries = await fetchRecentEntries(userId, limit);
     }
@@ -67,14 +65,19 @@ export async function POST(request: NextRequest) {
     }
 
     const entry = await createEntry({
+      _type: "journalEntry",
       title,
       body: content,
+      snippet: content.substring(0, 150),
+      authorRef: { _ref: author, _type: "reference" },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
       mood,
       tags: tags || [],
       encrypted: encrypted || false,
       wordCount: wordCount || content.split(/\s+/).length,
-      author: { _ref: author, _type: "reference" },
-    } as any);
+      readingTime: Math.ceil((wordCount || content.split(/\s+/).length) / 200),
+    });
 
     return NextResponse.json({ entry }, { status: 201 });
   } catch (error) {

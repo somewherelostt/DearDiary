@@ -11,7 +11,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { getMoodColor, getMoodLabel } from "@/lib/utils";
 
 interface MoodChartProps {
   timeline: Array<{ date: string; score: number; label: string }>;

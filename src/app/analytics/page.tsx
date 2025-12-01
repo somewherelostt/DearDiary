@@ -15,9 +15,19 @@ import { ArrowLeft, Calendar } from "lucide-react";
 import Link from "next/link";
 import { MoodLabel } from "@/types";
 
+interface Analytics {
+  stats: {
+    totalEntries: number;
+    avgSentiment: string;
+    dominantMood: string;
+  };
+  moodCounts: Record<MoodLabel, number>;
+  moodTimeline: Array<{ date: string; score: number; label: string }>;
+}
+
 export default function AnalyticsPage() {
   const [isLoading, setIsLoading] = useState(true);
-  const [analytics, setAnalytics] = useState<any>(null);
+  const [analytics, setAnalytics] = useState<Analytics | null>(null);
 
   useEffect(() => {
     // Simulate fetching analytics data
@@ -66,6 +76,10 @@ export default function AnalyticsPage() {
         </div>
       </div>
     );
+  }
+
+  if (!analytics) {
+    return null;
   }
 
   return (
