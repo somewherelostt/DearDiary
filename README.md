@@ -4,19 +4,24 @@
 
 DearDiary is an AI-powered journaling application that shifts colors based on your writing mood. Built with neobrutalism design principles, it combines modern aesthetics with intelligent sentiment analysis to create a unique journaling experience.
 
+🌐 **Live Demo:** [https://deardiary.maazx.dev/](https://deardiary.maazx.dev/)
+
 ![DearDiary Hero](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-cyan?style=for-the-badge&logo=tailwind-css)
+![Groq AI](https://img.shields.io/badge/Groq-AI-purple?style=for-the-badge)
 
 ## ✨ Features
 
-- **🎨 Live Mood Detection** - Watch your journal entries shift colors as you write
-- **🤖 AI-Powered Sentiment Analysis** - Groq API integration with lexicon-based fallback
-- **💎 Neobrutalism Design** - Bold borders, vibrant colors, and offset shadows
-- **📊 Mood Analytics** - Track your emotional patterns over time
-- **🔒 Secure & Private** - Your entries, your data
-- **📱 Fully Responsive** - Beautiful on desktop, tablet, and mobile
-- **⚡ Real-time Auto-save** - Never lose your thoughts
+- **🎨 Real-time Color Shifts** - Background smoothly transitions colors based on detected mood every 5 seconds
+- **🤖 Groq AI Sentiment Analysis** - Powered by Llama 3.3 70B for intelligent emotion detection
+- **💾 Local Storage Database** - All entries saved securely in your browser
+- **📊 Live Analytics Dashboard** - Track emotional patterns, mood distribution, and sentiment timeline
+- **💎 Neobrutalism Design** - Bold borders, vibrant colors, and striking shadows
+- **✨ Subtle Animations** - Smooth color transitions with shimmer effects
+- **🔒 Privacy First** - Your data stays on your device
+- **📱 Fully Responsive** - Beautiful on all screen sizes
+- **⚡ Auto-detect Mood** - AI analyzes your writing every 5 seconds
 
 ## 🚀 Getting Started
 
@@ -76,11 +81,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript 5
 - **Styling:** Tailwind CSS v4
-- **AI:** Groq SDK (llama-3.1-8b-instant)
+- **AI:** Groq SDK (Llama 3.3 70B Versatile)
+- **Storage:** Browser localStorage
 - **Animations:** Framer Motion
 - **Icons:** Lucide React
-- **CMS:** Sanity (upcoming)
-- **Auth:** NextAuth (upcoming)
+- **Charts:** Recharts
 
 ## 🎨 Mood System
 
@@ -97,20 +102,23 @@ DearDiary uses a sophisticated sentiment analysis system with 6 mood categories:
 
 ## 📁 Project Structure
 
-```
+```txt
 dearDiary/
 ├── src/
 │   ├── app/              # Next.js App Router pages
-│   │   ├── api/          # API routes
+│   │   ├── api/          # API routes (mood analysis, analytics)
+│   │   ├── analytics/    # Analytics dashboard
 │   │   ├── journal/      # Journal editor page
 │   │   └── page.tsx      # Landing page
 │   ├── components/       # React components
-│   │   ├── editor/       # Journal editor components
+│   │   ├── analytics/    # Analytics visualizations
+│   │   ├── editor/       # Journal editor & mood indicator
 │   │   └── ui/           # Neobrutalism UI components
 │   ├── lib/              # Utilities and helpers
-│   │   ├── mood-analyzer.ts
-│   │   ├── hooks.ts
-│   │   └── utils.ts
+│   │   ├── mood-analyzer.ts    # AI sentiment analysis
+│   │   ├── local-storage.ts    # localStorage database
+│   │   ├── hooks.ts            # Custom React hooks
+│   │   └── utils.ts            # Helper functions
 │   └── types/            # TypeScript definitions
 ├── public/               # Static assets
 └── tailwind.config.ts    # Tailwind configuration
