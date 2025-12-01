@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,44 +10,92 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import {
+  pageTransition,
+  cardHover,
+  staggerContainer,
+  staggerItem,
+  bounce,
+} from "@/lib/animations";
+import { Sparkles, Zap, TrendingUp, Lock, Palette, Heart } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white">
+    <motion.div
+      className="min-h-screen bg-white"
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={pageTransition}
+    >
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <Badge variant="yellow" className="mb-6 text-base px-6 py-2">
-            ✨ AI-Powered Mood Journal
-          </Badge>
+        <motion.div
+          className="max-w-4xl mx-auto text-center"
+          initial="hidden"
+          animate="show"
+          variants={staggerContainer}
+        >
+          <motion.div variants={staggerItem}>
+            <Badge
+              variant="yellow"
+              className="mb-6 text-base px-6 py-2 inline-flex items-center gap-2"
+            >
+              <motion.span animate={bounce}>✨</motion.span>
+              AI-Powered Mood Journal
+            </Badge>
+          </motion.div>
 
-          <h1 className="text-6xl md:text-8xl font-black mb-6 leading-none">
+          <motion.h1
+            className="text-6xl md:text-8xl font-black mb-6 leading-none"
+            variants={staggerItem}
+          >
             Dear<span className="text-yellow">Diary</span>
-          </h1>
+          </motion.h1>
 
-          <p className="text-2xl md:text-3xl font-bold mb-8 text-gray-700">
+          <motion.p
+            className="text-2xl md:text-3xl font-bold mb-8 text-gray-700"
+            variants={staggerItem}
+          >
             A journal that shifts colors with your emotions
-          </p>
+          </motion.p>
 
-          <p className="text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium">
+          <motion.p
+            className="text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium"
+            variants={staggerItem}
+          >
             Write freely while AI detects your mood in real-time, transforming
             your journal with beautiful color transitions. Track patterns, find
             insights, and express yourself.
-          </p>
+          </motion.p>
 
-          <div className="flex flex-wrap gap-4 justify-center">
+          <motion.div
+            className="flex flex-wrap gap-4 justify-center"
+            variants={staggerItem}
+          >
             <Link href="/journal">
-              <Button size="lg" variant="default" className="text-lg">
-                Start Journaling
-              </Button>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button size="lg" variant="default" className="text-lg">
+                  Start Journaling
+                </Button>
+              </motion.div>
             </Link>
             <Link href="/journal">
-              <Button size="lg" variant="reverse" className="text-lg">
-                View Demo
-              </Button>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button size="lg" variant="reverse" className="text-lg">
+                  View Demo
+                </Button>
+              </motion.div>
             </Link>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Features Section */}
@@ -192,6 +242,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
+    </motion.div>
   );
 }
