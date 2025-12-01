@@ -29,7 +29,15 @@ export function MoodChart({ timeline, totalEntries }: MoodChartProps) {
   }));
 
   // Custom Tooltip Component
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({
+    active,
+    payload,
+  }: {
+    active?: boolean;
+    payload?: Array<{
+      payload: { date: string; label: string; score: number };
+    }>;
+  }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (

@@ -264,7 +264,8 @@ export default function SettingsPage() {
                   )}
                 </div>
                 <p className="text-xs text-neutral-500 mt-2">
-                  Store this key securely. You'll need it to decrypt your data.
+                  Store this key securely. You&apos;ll need it to decrypt your
+                  data.
                 </p>
               </div>
 
