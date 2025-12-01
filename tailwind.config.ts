@@ -72,6 +72,8 @@ const config: Config = {
         neo: "var(--shadow-sm)",
         "neo-md": "var(--shadow-md)",
         "neo-lg": "var(--shadow-lg)",
+        brutal: "4px 4px 0px 0px #000000",
+        "brutal-lg": "8px 8px 0px 0px #000000",
         none: "none",
       },
       keyframes: {
@@ -87,11 +89,47 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        breathe: {
+          "0%, 100%": { transform: "scale(1)", opacity: "0.8" },
+          "50%": { transform: "scale(1.02)", opacity: "1" },
+        },
+        marquee: {
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+        "color-cycle": {
+          "0%, 100%": { color: "#fde047" },
+          "20%": { color: "#fb923c" },
+          "40%": { color: "#f472b6" },
+          "60%": { color: "#5eead4" },
+          "80%": { color: "#86efac" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
       },
       animation: {
         "mood-shift": "mood-shift 600ms ease",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        breathe: "breathe 4s ease-in-out infinite",
+        marquee: "marquee 40s linear infinite",
+        "color-cycle": "color-cycle 8s ease-in-out infinite",
+        float: "float 6s ease-in-out infinite",
+      },
+      backgroundImage: {
+        "gradient-joy": "linear-gradient(to right, #fde047, #fb923c, #f9a8d4)",
+        "gradient-calm": "linear-gradient(to right, #99f6e4, #6ee7b7, #86efac)",
+        "gradient-sad": "linear-gradient(to right, #bfdbfe, #a5b4fc, #cbd5e1)",
+        "gradient-angry":
+          "linear-gradient(to right, #ef4444, #fb7185, #fb923c)",
+        "gradient-anxious":
+          "linear-gradient(to right, #d8b4fe, #c084fc, #e879f9)",
+        "gradient-neutral":
+          "linear-gradient(to right, #e5e7eb, #cbd5e1, #a1a1aa)",
+        "mesh-ambient":
+          "radial-gradient(at 40% 20%, rgba(253, 224, 71, 0.3) 0px, transparent 50%), radial-gradient(at 80% 0%, rgba(251, 146, 60, 0.3) 0px, transparent 50%), radial-gradient(at 0% 50%, rgba(167, 243, 208, 0.3) 0px, transparent 50%), radial-gradient(at 80% 50%, rgba(196, 181, 253, 0.3) 0px, transparent 50%), radial-gradient(at 0% 100%, rgba(134, 239, 172, 0.3) 0px, transparent 50%), radial-gradient(at 80% 100%, rgba(249, 168, 212, 0.3) 0px, transparent 50%)",
       },
     },
   },
